@@ -1,0 +1,7 @@
+# mqtt-malformed-json.rules
+# PURPOSE: Detect MQTT PUBLISH payloads that are not valid JSON.
+# RULE 2000002: payload contains undefined string.
+# RULE 2000003: payload has repeated A bytes buffer overflow probe.
+# SID range: 2000002-2000003
+alert tcp any any -> any 1883 (msg:"MQTT Payload Contains Undefined Malformed JSON"; flow:established,to_server; content:"undefined"; classtype:bad-unknown; sid:2000002; rev:1;)
+alert tcp any any -> any 1883 (msg:"MQTT Oversized Repeated-Byte Payload Buffer Overflow Probe"; flow:established,to_server; content:"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"; depth:100; classtype:bad-unknown; sid:2000003; rev:1;)
